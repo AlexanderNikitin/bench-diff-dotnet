@@ -24,19 +24,15 @@
                     for (int j = 1; j < m; j++) {
                         int prevJ = j - 1;
 
-                        CacheHolder prevICurJ = prevCacheLine[j];
-                        CacheHolder curIPrevJ = currentCacheLine[prevJ];
-
-                        int a = prevICurJ.Count;
-                        int b = curIPrevJ.Count;
-
                         if (sequencePair.Equal(i - 1, prevJ)) {
                             CacheHolder prevIPrevJ = prevCacheLine[prevJ];
-                            int c = prevIPrevJ.Count + 1;
-                            if (c >= a && c >= b) {
-                                currentCacheLine[j] = new CacheHolder(c, Side.C, prevIPrevJ);
-                            }
+                            currentCacheLine[j] = new CacheHolder(prevIPrevJ.Count + 1, Side.C, prevIPrevJ);
                         } else {
+                            CacheHolder prevICurJ = prevCacheLine[j];
+                            CacheHolder curIPrevJ = currentCacheLine[prevJ];
+
+                            int a = prevICurJ.Count;
+                            int b = curIPrevJ.Count;
                             if (a == b && i < j || a > b) {
                                 currentCacheLine[j] = new CacheHolder(a, Side.A, prevICurJ);
                             } else {
