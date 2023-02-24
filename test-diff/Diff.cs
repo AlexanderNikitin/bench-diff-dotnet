@@ -10,17 +10,17 @@
                 int n = sequencePair.Length1 + 1;
                 int m = sequencePair.Length2 + 1;
 
+                CacheHolder[] prevCacheLine = new CacheHolder[m];
+                CacheHolder[] currentCacheLine = new CacheHolder[m];
+
                 CacheHolder[][] cache = {
-                new CacheHolder[m],
-                new CacheHolder[m]
-            };
+                    prevCacheLine,
+                    currentCacheLine
+                };
                 Array.Fill(cache[0], NULL);
                 cache[1][0] = NULL;
 
                 for (int i = 1; i < n; i++) {
-                    CacheHolder[] prevCacheLine = cache[(i + 1) % 2];
-                    CacheHolder[] currentCacheLine = cache[i % 2];
-
                     for (int j = 1; j < m; j++) {
                         int prevJ = j - 1;
 
@@ -40,6 +40,9 @@
                             }
                         }
                     }
+                    CacheHolder[] temp = prevCacheLine;
+                    prevCacheLine = currentCacheLine;
+                    currentCacheLine = temp;
                 }
 
                 int[][] result = new int[Math.Min(sequencePair.Length1, sequencePair.Length2)][];
