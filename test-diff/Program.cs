@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using test_diff;
 
-unchecked {
+unsafe {
 
     const int LENGTH = 10000;
     int[] a1 = new int[LENGTH];

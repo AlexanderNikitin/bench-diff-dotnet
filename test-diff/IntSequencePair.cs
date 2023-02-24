@@ -9,7 +9,7 @@ namespace test_diff
 
         public override bool Equal(int index1, int index2)
         {
-            unchecked {
+            unsafe {
                 return s1[index1] == s2[index2];
             }
         }

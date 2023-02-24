@@ -9,7 +9,7 @@
         }
 
         public int[][] Compare(SequencePair sequencePair) {
-            unchecked {
+            unsafe {
                 int n = sequencePair.Length1 + 1;
                 int m = sequencePair.Length2 + 1;
 
