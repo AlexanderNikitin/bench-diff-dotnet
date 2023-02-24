@@ -1,6 +1,9 @@
 ﻿namespace test_diff {
     public class Diff<T> : IDiff<T> where T : struct, IEquatable<T> {
-        private static readonly CacheHolder NULL = new(0, Side.NONE, null);
+        private static readonly CacheHolder NULL = new(0, 0, null);
+        public const int A = 1;
+        public const int B = 2;
+        public const int C = 3;
 
         public Diff() {
         }
@@ -26,7 +29,7 @@
 
                         if (sequencePair.Equal(i - 1, prevJ)) {
                             CacheHolder prevIPrevJ = prevCacheLine[prevJ];
-                            currentCacheLine[j] = new CacheHolder(prevIPrevJ.Count + 1, Side.C, prevIPrevJ);
+                            currentCacheLine[j] = new CacheHolder(prevIPrevJ.Count + 1, C, prevIPrevJ);
                         } else {
                             CacheHolder prevICurJ = prevCacheLine[j];
                             CacheHolder curIPrevJ = currentCacheLine[prevJ];
@@ -34,9 +37,9 @@
                             int a = prevICurJ.Count;
                             int b = curIPrevJ.Count;
                             if (a == b && i < j || a > b) {
-                                currentCacheLine[j] = new CacheHolder(a, Side.A, prevICurJ);
+                                currentCacheLine[j] = new CacheHolder(a, A, prevICurJ);
                             } else {
-                                currentCacheLine[j] = new CacheHolder(b, Side.B, curIPrevJ);
+                                currentCacheLine[j] = new CacheHolder(b, B, curIPrevJ);
                             }
                         }
                     }
@@ -47,21 +50,21 @@
 
                 int[][] result = new int[Math.Min(sequencePair.Length1, sequencePair.Length2)][];
                 int index = result.Length;
-                CacheHolder? cur = cache[sequencePair.Length1 % 2][sequencePair.Length2];
+                CacheHolder cur = cache[sequencePair.Length1 % 2][sequencePair.Length2];
                 for (int i = sequencePair.Length1, j = sequencePair.Length2;
                      i > 0 && j > 0;) {
-                    switch (cur?.Side) {
-                        case Side.C:
+                    switch (cur.Side) {
+                        case C:
                             result[--index] = new int[] { --i, --j };
                             break;
-                        case Side.A:
+                        case A:
                             i--;
                             break;
-                        case Side.B:
+                        case B:
                             j--;
                             break;
                     }
-                    cur = cur?.Prev;
+                    cur = cur.Prev;
                 }
                 if (index > 0) {
                     int[][] temp = new int[result.Length - index][];
@@ -71,14 +74,6 @@
                 return result;
             }
         }
-
-        private static class Side {
-            public const int A = 1;
-            public const int B = 2;
-            public const int C = 3;
-            public const int NONE = 140;
-        }
-
         private record CacheHolder(int Count, int Side, CacheHolder? Prev) {
         }
     }
