@@ -23,26 +23,26 @@
                 Array.Fill(cache[0], NULL);
                 cache[1][0] = NULL;
 
-                for (int i = 1; i < n; i++) {
-                    for (int j = 1; j < m; j++) {
-                        int prevJ = j - 1;
-
-                        if (sequencePair.Equal(i - 1, prevJ)) {
+                for (int i = 1, prevI = 0; i < n; prevI = i++) {
+                    CacheHolder curIPrevJ = currentCacheLine[0];
+                    for (int j = 1, prevJ = 0; j < m; prevJ = j++) {
+                        CacheHolder res;
+                        if (sequencePair.Equal(prevI, prevJ)) {
                             CacheHolder prevIPrevJ = prevCacheLine[prevJ];
-                            currentCacheLine[j] = new CacheHolder(prevIPrevJ.Count + 1, C, prevIPrevJ);
+                            res = new CacheHolder(prevIPrevJ.Count + 1, C, prevIPrevJ);
                         } else {
-                            CacheHolder prevICurJ = prevCacheLine[j];
-                            CacheHolder curIPrevJ = currentCacheLine[prevJ];
-
-                            int a = prevICurJ.Count;
-                            int b = curIPrevJ.Count;
-                            if (a == b && i < j || a > b) {
-                                currentCacheLine[j] = new CacheHolder(a, A, prevICurJ);
-                            } else {
-                                currentCacheLine[j] = new CacheHolder(b, B, curIPrevJ);
-                            }
+                             CacheHolder prevICurJ = prevCacheLine[j];
+                             int a = prevICurJ.Count;
+                             int b = curIPrevJ.Count;
+                            res = a > b || a == b && i < j ?
+                                    new CacheHolder(a, A, prevICurJ) :
+                                    new CacheHolder(b, B, curIPrevJ);
                         }
+
+                        currentCacheLine[j] = res;
+                        curIPrevJ = res;
                     }
+
                     CacheHolder[] temp = prevCacheLine;
                     prevCacheLine = currentCacheLine;
                     currentCacheLine = temp;
