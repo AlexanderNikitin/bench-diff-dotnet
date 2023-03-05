@@ -20,7 +20,7 @@ Console.ReadKey();
 
 IEnumerable<KeyValuePair<int[], int[]>> dataGen(int length, int ratio, int iterations)
 {
-    Random random = new Random();
+    Random random = new();
     IList<KeyValuePair<int[], int[]>> result = new List<KeyValuePair<int[], int[]>>();
     int maxRandom = length / ratio;
     for(int i = 0; i < iterations; i++)

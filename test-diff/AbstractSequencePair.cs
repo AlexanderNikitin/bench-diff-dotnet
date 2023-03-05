@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+
 namespace test_diff
 {
     public abstract class AbstractSequencePair<T>:SequencePair{
@@ -16,7 +18,8 @@ namespace test_diff
 
         public int Length2 => GetLength(s2);
 
-        public abstract bool Equal(int index1, int index2);
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        public abstract unsafe bool Equal(int index1, int index2);
         protected abstract int GetLength(T s);
     }
 }

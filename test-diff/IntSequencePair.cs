@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+
 namespace test_diff
 {
     public class IntSequencePair : AbstractSequencePair<int[]>
@@ -7,6 +9,7 @@ namespace test_diff
         {
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public override unsafe bool Equal(int index1, int index2)
         {
             return s1[index1] == s2[index2];

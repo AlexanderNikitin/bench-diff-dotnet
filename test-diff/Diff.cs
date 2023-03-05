@@ -1,13 +1,13 @@
-﻿namespace test_diff {
+﻿using System.Runtime.CompilerServices;
+
+namespace test_diff {
     public class Diff : IDiff {
         private static readonly CacheHolder NULL = new(0, 0, null);
         public const int A = 1;
         public const int B = 2;
         public const int C = 3;
 
-        public Diff() {
-        }
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public unsafe int[][] Compare(SequencePair sequencePair) {
             int n = sequencePair.Length1 + 1;
             int m = sequencePair.Length2 + 1;
@@ -15,12 +15,13 @@
             CacheHolder[] prevCacheLine = new CacheHolder[m];
             CacheHolder[] currentCacheLine = new CacheHolder[m];
 
+            Array.Fill(prevCacheLine, NULL);
+            currentCacheLine[0] = NULL;
+
             CacheHolder[][] cache = {
                     prevCacheLine,
                     currentCacheLine
                 };
-            Array.Fill(cache[0], NULL);
-            cache[1][0] = NULL;
 
             for (int i = 1, prevI = 0; i < n; prevI = i++) {
                 CacheHolder curIPrevJ = currentCacheLine[0];
@@ -34,17 +35,13 @@
                         int a = prevICurJ.Count;
                         int b = curIPrevJ.Count;
                         res = a > b || a == b && i < j ?
-                                new CacheHolder(a, A, prevICurJ) :
-                                new CacheHolder(b, B, curIPrevJ);
+                                new (a, A, prevICurJ) :
+                                new (b, B, curIPrevJ);
                     }
-
-                    currentCacheLine[j] = res;
-                    curIPrevJ = res;
+                    curIPrevJ = currentCacheLine[j] = res;
                 }
 
-                CacheHolder[] temp = prevCacheLine;
-                prevCacheLine = currentCacheLine;
-                currentCacheLine = temp;
+                (currentCacheLine, prevCacheLine) = (prevCacheLine, currentCacheLine);
             }
 
             int[][] result = new int[Math.Min(sequencePair.Length1, sequencePair.Length2)][];
@@ -72,7 +69,6 @@
             }
             return result;
         }
-        private record CacheHolder(int Count, int Side, CacheHolder? Prev) {
-        }
+        private record CacheHolder(int Count, int Side, CacheHolder? Prev);
     }
 }
