@@ -6,7 +6,7 @@ int[][]? values = null;
 Stopwatch stopWatch = Stopwatch.StartNew();
 foreach(var kvp in dataGen(10000, 100, 20))
 {
-    IDiff<int> diff = new Diff<int>();
+    IDiff diff = new Diff();
     int[][] temp = diff.Compare(new IntSequencePair(kvp.Value, kvp.Key));
     if (values == null || temp.Length > values.Length)
     {

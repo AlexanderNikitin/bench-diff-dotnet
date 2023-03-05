@@ -1,5 +1,5 @@
 ﻿namespace test_diff {
-    public class Diff<T> : IDiff<T> where T : struct, IEquatable<T> {
+    public class Diff : IDiff {
         private static readonly CacheHolder NULL = new(0, 0, null);
         public const int A = 1;
         public const int B = 2;
