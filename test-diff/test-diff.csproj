@@ -16,8 +16,9 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-    <DebugType>none</DebugType>
+    <DebugType>full</DebugType>
     <Deterministic>False</Deterministic>
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -25,25 +26,28 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-    <DebugType>none</DebugType>
+    <DebugType>full</DebugType>
     <Deterministic>False</Deterministic>
+    <Optimize>True</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <LangVersion>11.0</LangVersion>
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugType>full</DebugType>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
     <Deterministic>False</Deterministic>
+    <Optimize>True</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LangVersion>11.0</LangVersion>
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugType>full</DebugType>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
     <Deterministic>False</Deterministic>
+    <Optimize>True</Optimize>
   </PropertyGroup>
 </Project>

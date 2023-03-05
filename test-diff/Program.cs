@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using test_diff;
 
-Random random = new Random();
 int[][]? values = null;
 Stopwatch stopWatch = Stopwatch.StartNew();
 foreach(var kvp in dataGen(10000, 100, 20))
@@ -21,6 +20,7 @@ Console.ReadKey();
 
 IEnumerable<KeyValuePair<int[], int[]>> dataGen(int length, int ratio, int iterations)
 {
+    Random random = new Random();
     IList<KeyValuePair<int[], int[]>> result = new List<KeyValuePair<int[], int[]>>();
     int maxRandom = length / ratio;
     for(int i = 0; i < iterations; i++)
