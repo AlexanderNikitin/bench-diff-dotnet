@@ -8,7 +8,7 @@
         public Diff() {
         }
 
-        public int[][] Compare(SequencePair sequencePair) {
+        public unsafe int[][] Compare(SequencePair sequencePair) {
             int n = sequencePair.Length1 + 1;
             int m = sequencePair.Length2 + 1;
 
